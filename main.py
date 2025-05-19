@@ -21,6 +21,10 @@ from utils.info import *
 from utils.database import *
 from subprocess import Popen
 from pyrogram import Client, filters
+from pyrogram import utils as pyroutils
+
+pyroutils.MIN_CHAT_ID = -999999999999
+pyroutils.MIN_CHANNEL_ID = -100999999999999
 
 User = Client("auto-delete-user",
               session_string=SESSION)
