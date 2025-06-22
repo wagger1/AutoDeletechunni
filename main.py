@@ -8,7 +8,7 @@ from time import time
 from utils.info import *  # Should define SESSION, BOT_TOKEN, CHATS, etc.
 from utils.database import save_message
 from subprocess import Popen
-from pyrogram import Client, filters
+from pyrogram import Client, filters, idle
 from pyrogram import utils as pyroutils
 import asyncio
 
@@ -65,7 +65,6 @@ async def main():
     )
 
 async def idle_loop():
-    from pyrogram.idle import idle
     await idle()
     await User.stop()
     await Bot.stop()
