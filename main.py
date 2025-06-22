@@ -20,8 +20,8 @@ User = Client("auto-delete-user", session_string=SESSION)
 Bot = Client("auto-delete-bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
 # Common delete handler
-@filters.chat(CHATS)
-async def delete_handler(client, message):
+@User.on_message(filters.chat(CHATS))
+async def delete_handler_user(client, message):
     try:
         if WHITE_LIST and message.from_user and message.from_user.id in WHITE_LIST:
             return
@@ -30,7 +30,19 @@ async def delete_handler(client, message):
         _time = int(time()) + TIME
         save_message(message, _time)
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error in user handler: {e}")
+
+@Bot.on_message(filters.chat(CHATS))
+async def delete_handler_bot(client, message):
+    try:
+        if WHITE_LIST and message.from_user and message.from_user.id in WHITE_LIST:
+            return
+        if BLACK_LIST and message.from_user and message.from_user.id not in BLACK_LIST:
+            return
+        _time = int(time()) + TIME
+        save_message(message, _time)
+    except Exception as e:
+        print(f"Error in bot handler: {e}")
 
 User.add_handler(filters.chat(CHATS), delete_handler)
 Bot.add_handler(filters.chat(CHATS), delete_handler)
