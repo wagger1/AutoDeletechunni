@@ -44,8 +44,8 @@ async def delete_handler_bot(client, message):
     except Exception as e:
         print(f"Error in bot handler: {e}")
 
-User.add_handler(filters.chat(CHATS), delete_handler)
-Bot.add_handler(filters.chat(CHATS), delete_handler)
+User.add_handler(filters.chat(CHATS), delete_handler_user)
+Bot.add_handler(filters.chat(CHATS), delete_handler_bot)
 
 # Start handler only for bot
 @Bot.on_message(filters.command("start") & filters.private)
